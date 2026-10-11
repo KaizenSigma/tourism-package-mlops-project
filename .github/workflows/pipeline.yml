@@ -63,6 +63,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: data-splits
+      - name: Start MLflow Server
+        run: |
+          nohup mlflow ui --host 0.0.0.0 --port 5000 &  # Run MLflow UI in the background
+          sleep 5  # Wait for a moment to let the server starts
       - name: Model Building
         run: python tourism_project/model_building/train.py
       - name: Commit Trained Model
